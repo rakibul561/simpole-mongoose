@@ -9,18 +9,43 @@ const Todo = new mongoose.model("Todo", todoSchema);
 
 // Get tha all todos 
 
-router.get('/', async (req, res) =>{
+router.get('/', async (req, res) =>{ 
+
+    Todo.find({ status: 'inactive' })
+    .then((data) => {
+        res.status(200).json({
+            result: data,
+            message: "Todos were found successfully"
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            error: "There was a server-side error",
+            details: err.message
+        });
+    });
+
 
 })
-
-
  // GET A TODO BY ID 
+router.get('/:id', async (req, res) =>{ 
 
-router.get('/:id', async (req, res) =>{
+
+    Todo.find({ _id:req.params.id})
+    .then((data) => {
+        res.status(200).json({
+            result: data,
+            message: "Todos were found successfully"
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            error: "There was a server-side error",
+            details: err.message
+        });
+    });
 
  })
-
-
  // POST A TODO
 
  router.post('/', async (req, res) => {
@@ -36,8 +61,6 @@ router.get('/:id', async (req, res) =>{
         });
     }
 });
-
-
  // POST MULTIPOLE TODO 
 
 router.post('/all', async (req, res) =>{ 
@@ -82,11 +105,32 @@ router.put('/:id', async (req, res) =>{
 
      
 
- })
+ }) 
 
  // PuT Deleted TODO 
 
-router.delete('/:id', async (req, res) =>{
+router.delete('/:id', async (req, res) =>{ 
+
+    
+    Todo.deleteOne(
+        { _id: req.params.id },
+        { $set: { status: 'inactive' } }
+    )
+    .then((result) => {
+        res.status(200).json({
+            message: "Todo was deleted successfully",
+            data: result
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            error: "There was a server-side error!",
+            details: err.message
+        });
+    });
+    
+
+     
 
  }) 
 
