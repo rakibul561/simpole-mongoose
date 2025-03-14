@@ -11,7 +11,6 @@ const todoSchema = mongoose.Schema({
     description:  String ,
     status : {
         type: String ,
-        enum : ['active', 'inactive']
     },
     Date: {
         type: Date ,
