@@ -17,15 +17,23 @@ const todoSchema = mongoose.Schema({
         default: Date.now ,
     },
    
-}) 
+})  
+
+//   instance methods
 todoSchema.methods = {
    findInActive: function() {
     return mongoose.model("Todo").find({status: 'active'}) ;
    },
-   findInActiveCallback: function(cb) {
-    return mongoose.model("Todo").find({status: 'active'}, cb) ;
+  
+}  
+
+//  static methods 
+
+ todoSchema.statics = {
+   findByJs: function(){
+    return this.find({title: /js/i });
    }
-} 
+ }
 
 
 

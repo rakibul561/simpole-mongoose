@@ -41,16 +41,15 @@ router.get('/inactive', async (req, res) =>{
 
 })
 
+//  Get inactive todos
+router.get('/js', async (req, res) =>{ 
+ 
+  const data = Todo.findByJs(); 
+  res.status(200).json({
+    data,
+  })
 
-//  Get ACTIVE TODOS IN CALLBACK
-router.get('/inactive-callback', async (req, res) => { 
-    try {
-        const todos = await Todo.findInActiveCallback();
-        res.status(200).json({ data: todos });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+})
 
 
 
