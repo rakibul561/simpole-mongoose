@@ -27,6 +27,33 @@ router.get('/', async (req, res) =>{
 
 
 })
+ 
+
+
+//  Get inactive todos
+router.get('/inactive', async (req, res) =>{ 
+ 
+    const todo = new Todo();
+    const data = await todo.findInActive();
+    res.status(200).json({
+        data,
+    })
+
+})
+
+
+//  Get ACTIVE TODOS IN CALLBACK
+router.get('/inactive-callback', async (req, res) => { 
+    try {
+        const todos = await Todo.findInActiveCallback();
+        res.status(200).json({ data: todos });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+
  // GET A TODO BY ID 
 router.get('/:id', async (req, res) =>{ 
 
@@ -47,7 +74,6 @@ router.get('/:id', async (req, res) =>{
 
  })
  // POST A TODO
-
  router.post('/', async (req, res) => {
     try {
         const newTodo = new Todo(req.body);
