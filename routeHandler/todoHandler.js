@@ -158,6 +158,32 @@ router.delete('/:id', async (req, res) =>{
      
 
  }) 
+//  // PuT Deleted TODO 
+
+// router.delete('/:id', async (req, res) =>{ 
+
+    
+//     Todo.deleteOne(
+//         { _id: req.params.id },
+//         { $set: { status: 'inactive' } }
+//     )
+//     .then((result) => {
+//         res.status(200).json({
+//             message: "Todo was deleted successfully",
+//             data: result
+//         });
+//     })
+//     .catch((err) => {
+//         res.status(500).json({
+//             error: "There was a server-side error!",
+//             details: err.message
+//         });
+//     });
+    
+
+     
+
+//  }) 
 
 
  module.exports = router ;
