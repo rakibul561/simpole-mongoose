@@ -1,9 +1,12 @@
 const express = require('express')
 const mongoose  = require('mongoose') 
+const dotenv  = require('dotenv') 
 const todoHandler = require("./routeHandler/todoHandler")
+const userHandler = require("./routeHandler/userHandler")
 
 //  express app initialization 
 const app = express();
+dotenv.config();
 app.use(express.json());
  
 //   connect with mongoose 
@@ -18,6 +21,7 @@ app.use(express.json());
 
 
 app.use('/todo',todoHandler);
+app.use('/user',userHandler);
   
   
 //  default error handeling 
