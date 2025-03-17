@@ -9,20 +9,37 @@ const Todo = new mongoose.model("Todo", todoSchema);
 
 // Get tha all todos 
 
-router.get('/', async (req, res) =>{ 
-
-   
-
-})
- 
-
-
+router.get('/', async (req, res) => { 
+    try {
+        const todos = await Todo.find(); // সব টাস্ক আনবে
+        res.status(200).json({
+            result: todos,
+            message: "Todos were found successfully"
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: "There was a server-side error",
+            details: err.message
+        });
+    }
+});
 
 
  // GET A TODO BY ID 
 router.get('/:id', async (req, res) =>{ 
-
-
+   
+    try {
+        const todos = await Todo.find({_id: req.params.id}); 
+        res.status(200).json({
+            result: todos,
+            message: "Todos were found successfully"
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: "There was a server-side error",
+            details: err.message
+        });
+    }
 
  })
 
@@ -67,17 +84,47 @@ router.post('/all', async (req, res) =>{
  // PuT MULTIPOLE TODO 
 
 router.put('/:id', async (req, res) =>{ 
-   
- 
     
-
-     
+    Todo.updateOne(
+        { _id: req.params.id },
+        { $set: { title: 'i am a frontend developer'} }
+    )
+    .then((result) => {
+        res.status(200).json({
+            message: "Todo was updated successfully",
+            data: result
+        });
+    })
+    .catch((err) => {
+        res.status(500).json({
+            error: "There was a server-side error!",
+            details: err.message
+        });
+    });
+    
 
  }) 
 
  // PuT Deleted TODO 
 
-router.delete('/:id', async (req, res) =>{ 
+router.delete('/:id', async (req, res) =>{  
+
+
+    Todo.deleteOne(
+        {_id: req.params.id}
+    ) 
+    .then((result)=>{
+        res.status(200).json({
+         message:"todos deleted succesfull",
+         data:result ,
+        })
+    })
+    .catch((err)=>{
+        res.status(500).json({
+        error: "there was a server side error",
+        message:err
+        })
+    })
 
     
     
