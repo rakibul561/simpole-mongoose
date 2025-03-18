@@ -8,34 +8,7 @@ const userSchema = require('../schemas/userSchema') ;
 const User = new mongoose.model("User", userSchema);
  
 
-
-// user sign up 
-
-// router.post('/signup', async (req, res) => { 
-      
-//     try {
-//      const hashedPassword = await bcrypt.hash(req, body.password, 10)
-       
-//       const newUser = new User({
-//         name: req.body.name ,
-//         username:req.body.username,
-//         password: hashedPassword
-//       })
-
-//         await newUser.save(); 
-//         res.status(200).json({
-//             message: "Sign up was succesfull!"
-//         });
-//     } catch (err) {
-//         res.status(500).json({
-//             error: "signup failed"
-//         });
-//     }
-
-
-     
-
-//  })  
+  
 
 
 router.post('/signup', async (req, res) => { 
@@ -67,14 +40,14 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username }); // findOne ব্যবহার করুন
+        const user = await User.findOne({ username: req.body.username }); 
 
-        if (user) { // যদি user পাওয়া যায়
-            // পাসওয়ার্ড যাচাই
+        if (user) { 
+           
             const isValidPassword = await bcrypt.compare(req.body.password, user.password);
             
             if (isValidPassword) {
-                // JWT টোকেন তৈরি
+              
                 const token = jwt.sign({
                     username: user.username,
                     userId: user._id
@@ -83,7 +56,7 @@ router.post('/login', async (req, res) => {
                 });
                 
                 res.status(200).json({
-                    "access-token": token, // access-token বানান
+                    "access-token": token,
                     "message": "Login successful!"
                 });
             } else {
@@ -97,7 +70,7 @@ router.post('/login', async (req, res) => {
             });
         }
     } catch (err) {
-        console.error(err); // ডিবাগিংয়ের জন্য লগ
+        console.error(err); 
         res.status(401).json({
             "Error": "Authentication Failed"
         });
