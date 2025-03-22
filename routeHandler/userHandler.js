@@ -76,6 +76,84 @@ router.post('/login', async (req, res) => {
         });
     }
 });
+//   user login
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.body.username }); 
+
+        if (user) { 
+           
+            const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+            
+            if (isValidPassword) {
+              
+                const token = jwt.sign({
+                    username: user.username,
+                    userId: user._id
+                }, process.env.JWT_SECRET_TOKEN, {
+                    expiresIn: '1h'
+                });
+                
+                res.status(200).json({
+                    "access-token": token,
+                    "message": "Login successful!"
+                });
+            } else {
+                res.status(401).json({
+                    "Error": "Authentication Failed"
+                });
+            }
+        } else {
+            res.status(401).json({
+                "Error": "Authentication Failed"
+            });
+        }
+    } catch (err) {
+        console.error(err); 
+        res.status(401).json({
+            "Error": "Authentication Failed"
+        });
+    }
+});
+//   user login
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.body.username }); 
+
+        if (user) { 
+           
+            const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+            
+            if (isValidPassword) {
+              
+                const token = jwt.sign({
+                    username: user.username,
+                    userId: user._id
+                }, process.env.JWT_SECRET_TOKEN, {
+                    expiresIn: '1h'
+                });
+                
+                res.status(200).json({
+                    "access-token": token,
+                    "message": "Login successful!"
+                });
+            } else {
+                res.status(401).json({
+                    "Error": "Authentication Failed"
+                });
+            }
+        } else {
+            res.status(401).json({
+                "Error": "Authentication Failed"
+            });
+        }
+    } catch (err) {
+        console.error(err); 
+        res.status(401).json({
+            "Error": "Authentication Failed"
+        });
+    }
+});
 
 
 
