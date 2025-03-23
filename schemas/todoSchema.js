@@ -9,6 +9,7 @@
      },
  
      description:  String ,
+     item: String ,
      status : {
          type: String ,
      },
